@@ -2,8 +2,7 @@
 simulación de una web donde se venderan productos de una Banda */
 
 
-//Declaramos variables globales
-const IVA = 1.19;
+
 
 // Declaro estas variables para darle más funcionalidad al codigo.
 const PRODUCTO1 = "Bolso Blanco";
@@ -23,11 +22,14 @@ let cantProducto2 = 0;
 let cantProducto3 = 0;
 let cantProducto4 = 0;
 
-// Funciones
-function calcular_total(cantidad1,cantidad2,cantidad3,cantidad4){
+// Funcion
+function calcular_total(cantidad1,cantidad2,cantidad3,cantidad4,cuponExiste){
    
+    const IVA = 1.19;
     let valor = (cantidad1*VALOR_PRODUCTO1)+(cantidad2*VALOR_PRODUCTO2)+(cantidad3*VALOR_PRODUCTO3)+(cantidad4*VALOR_PRODUCTO4);
-
+     if (cuponExiste!= false){
+        valor = valor - (valor * 0.2);
+     }
     valor = valor*IVA;
     return valor;
 }
@@ -40,7 +42,8 @@ while (nombreUsuario == '') {
     nombreUsuario = prompt("Favor ingrese un nombre de usuario valido");
 
 }
-let clave = prompt("Ingrese su clave"); // no se encrypta ni se valida el campo, es solo demostrativo
+ // no se encrypta ni se valida el campo, es solo demostrativo
+let clave = prompt("Ingrese su clave");
 alert("Bienvenido " + nombreUsuario);
 
 
@@ -72,6 +75,7 @@ while (consultaCompra.toLowerCase().trim() != "no") {
     consultaCompra = prompt("¿Quiere agregar otro producto, ingrese 'Si' o 'No' ");
 }
 
+// Se muestra al usuario el detalle del carrito.
 console.log("Se Agregaron los siguiente productos");
 if (cantProducto1 > 0)
     console.log(PRODUCTO1 + " " + cantProducto1 + " veces");
@@ -83,10 +87,19 @@ if (cantProducto4 > 0)
     console.log(PRODUCTO4 + " " + cantProducto4 + " veces");
 
 
+// Se solicita la validación para terminar la compra.    
 let finalizarCompra = prompt("¿Desea Finalizar la compra?, ingrese Si o No")
 
+
 if (finalizarCompra.toLowerCase().trim() == "si") {
-    let total = calcular_total(cantProducto1, cantProducto2, cantProducto3, cantProducto4);
+    let cupon = prompt ("Si tiene un cupon de descuento ingreselo aqui") 
+    // si ingresa algo tendra descuento.
+    let cuponExiste = false;
+    
+    if (cupon.trim().length>0 && cupon != "" && cupon.toLowerCase().trim() != "no"){
+         cuponExiste = true;
+    }
+    let total = calcular_total(cantProducto1, cantProducto2, cantProducto3, cantProducto4, cuponExiste);
     console.log("El total de tu cuenta es: " + total)
 } else {
     alert("Cuando vuelvas tus productos te estaran esperando")
