@@ -1,106 +1,84 @@
-/* Primera Pre-Entrega JS, realizaremos una 
+/* Segunda Pre-Entrega JS, realizaremos una 
 simulación de una web donde se venderan productos de una Banda */
 
+//Para ingresar de inmediato escribir Raul y por el momento no se autenticara con la clave.
+let nombreUsuario = prompt("Ingrese Nombre de Usuario");
+let terminar = false;
+let consultaCompra = '';
+while (!terminar) {
+    if (!encontrarCliente(nombreUsuario)) {
+        alert("El nombre ingresado no existe");
+        nombreUsuario = prompt("Ingrese un nombre de Usuario Valido para continuar \no escriba salir para cerrar. ");
+    } else {
+
+        alert("Bienvenido, " + nombreUsuario + "!");
+        consultaCompra = validarRespuesta(prompt("¿Quiere comprar algun producto?, ingrese 'Si' o 'No' "));
+        let agregarProducto = [];
+        while (consultaCompra !== "no") {
+            let nombresProductos = productosMocks.map(producto => producto.id + " - " + producto.nombre);
+
+            let productoSeleccionado = encontarProducto(prompt("Seleccione un producto:\n" + nombresProductos.join("\n")));
+            if (productoSeleccionado) {
+                let cantidad = validarNumero(parseInt(prompt("Producto: " + productoSeleccionado.nombre + "\n¿Cuantos quiere agregar al carro? \nvalor por c/u: $" + productoSeleccionado.valor)))
+                //por ahora no se valida que la cantidad ingresada sea menor o igual al stock del producto.
+                let productoAComprar = new Producto(productoSeleccionado.id, productoSeleccionado.valor, cantidad)
+                agregarProducto.push(productoAComprar);
+
+            } else{
+                alert("Producto no encontrado, intentelo nuevamente");
+            }
+            //Mostramos detalle de los productos en el carrito
+            console.clear();
+            console.log("Productos Actuales en el carrito");
+            for (let i = 0; i < agregarProducto.length; i++) {
+                let productoNombre = encontarProducto(agregarProducto[i].id.toString());
+                console.log("Producto: " + productoNombre.nombre + "\nValor: " + agregarProducto[i].valor + "\nCantidad: " + agregarProducto[i].cantidad);
+            }
+            if(productoSeleccionado !== null){
+            consultaCompra = validarRespuesta(prompt("¿Quiere agregar otro producto, ingrese 'Si' o 'No' "));
+            }
+        }
 
 
-
-// Declaro estas variables para darle más funcionalidad al codigo.
-const PRODUCTO1 = "Bolso Blanco";
-const PRODUCTO2 = "Gorro de Lana";
-const PRODUCTO3 = "Jockey";
-const PRODUCTO4 = "Llavero";
-
-const PRODUCTOS_MENU = "\n\t 1.- " + PRODUCTO1 + "\n\t 2.- " + PRODUCTO2 + "\n\t 3.- " + PRODUCTO3 + "\n\t 4.- " + PRODUCTO4;
-
-const VALOR_PRODUCTO1 = 15000;
-const VALOR_PRODUCTO2 = 7000;
-const VALOR_PRODUCTO3 = 10000;
-const VALOR_PRODUCTO4 = 5000;
-
-let cantProducto1 = 0;
-let cantProducto2 = 0;
-let cantProducto3 = 0;
-let cantProducto4 = 0;
-
-// Funcion
-function calcular_total(cantidad1,cantidad2,cantidad3,cantidad4,cuponExiste){
-   
-    const IVA = 1.19;
-    let valor = (cantidad1*VALOR_PRODUCTO1)+(cantidad2*VALOR_PRODUCTO2)+(cantidad3*VALOR_PRODUCTO3)+(cantidad4*VALOR_PRODUCTO4);
-     if (cuponExiste!= false){
-        valor = valor - (valor * 0.2);
-     }
-    valor = valor*IVA;
-    return valor;
-}
-
-// Iniciaremos con una simulación de Login de usuario
-let nombreUsuario = prompt("Ingrese su nombre de usuario");
-
-// Si el usuario no ingresa un nombre se vuelve a solicitar
-while (nombreUsuario == '') {
-    nombreUsuario = prompt("Favor ingrese un nombre de usuario valido");
-
-}
- // no se encrypta ni se valida el campo, es solo demostrativo
-let clave = prompt("Ingrese su clave");
-alert("Bienvenido " + nombreUsuario);
+        if (consultaCompra !== "no" || agregarProducto.length > 0) {
+            // Consultamos si quiere finalizar la compra o salir del programa
+            let finalizarCompra = validarRespuesta(prompt("¿Quiere finalizar la compra?, ingrese si o no"));
+            if (finalizarCompra === "si") {
+                // Calculamos la fecha de compra y de envio
+                let fechaActual = fechaFormateada(new Date());
+                let fechaEnvio = fechaFormateada(new Date(new Date().getTime() + 48 * 60 * 60 * 1000));
+                const IVA = 1.19;
+                //Se Calcula el total de la orden
+                const totalOrden = agregarProducto.reduce((total, producto) => total + producto.total(), 0)*IVA;
+                //Creamos el objeto OrdendeCompra 
+                let nuevaOrdenCompra = new OrdenCompra(encontrarCliente(nombreUsuario).rut, ordenesMocks[ordenesMocks.length - 1].idOrden + 1, agregarProducto, fechaActual, fechaEnvio, totalOrden);
 
 
-// Generamos simulación de agregar prodcutos al carrito
-let consultaCompra = prompt("¿Quiere comprar algun producto?, ingrese 'Si' o 'No' ");
-while (consultaCompra.toLowerCase().trim() != "no") {
+                //Mostrar detalle total a pagar
+                console.log("Total a Pagar por los Productos: " + totalOrden + " Iva Incluido");
+                let confirmarCompra = validarRespuesta(prompt("¿Proceder al Pago?: Si - No"));
+                if (confirmarCompra === "si") {
+                    alert(nuevaOrdenCompra.ordenFinalizada());
+                    //Se Agrega al resto de ordenes y se imprimen las ordenes asociadas al cliente.
+                    ordenesMocks.push(nuevaOrdenCompra);
+                    console.table(ordenesMocks.filter((cliente) => cliente.rutCliente.includes(encontrarCliente(nombreUsuario).rut)));
+                    salir();
 
-    let seleccionProducto = parseInt(prompt("Seleccione un producto" + PRODUCTOS_MENU)); // al no trabajar con array el valor del producto se ira reemplazando 
-    switch (seleccionProducto) {
-        case 1:
-            console.log("Se Agrego" + PRODUCTO1 + " al Carrito");
-            cantProducto1++;
-            break
-        case 2:
-            console.log("Se Agrego " + PRODUCTO2 + " al Carrito");
-            cantProducto2++;
-            break
-        case 3:
-            console.log("Se Agrego " + PRODUCTO3 + " al Carrito");
-            cantProducto3++;
-            break
-        case 4:
-            console.log("Se Agrego " + PRODUCTO4 + " a al Carrito");
-            cantProducto4++;
-            break
-        default:
-            alert("Ingrese un producto valido para agregar");
+                } else {
+                    alert(mensaje())
+                }
+
+            } else {
+                alert(mensaje())
+            }
+
+        }
+
     }
-    consultaCompra = prompt("¿Quiere agregar otro producto, ingrese 'Si' o 'No' ");
-}
-
-// Se muestra al usuario el detalle del carrito.
-console.log("Se Agregaron los siguiente productos");
-if (cantProducto1 > 0)
-    console.log(PRODUCTO1 + " " + cantProducto1 + " veces");
-if (cantProducto2 > 0)
-    console.log(PRODUCTO2 + " " + cantProducto2 + " veces");
-if (cantProducto3 > 0)
-    console.log(PRODUCTO3 + " " + cantProducto3 + " veces");
-if (cantProducto4 > 0)
-    console.log(PRODUCTO4 + " " + cantProducto4 + " veces");
-
-
-// Se solicita la validación para terminar la compra.    
-let finalizarCompra = prompt("¿Desea Finalizar la compra?, ingrese Si o No")
-
-
-if (finalizarCompra.toLowerCase().trim() == "si") {
-    let cupon = prompt ("Si tiene un cupon de descuento ingreselo aqui") 
-    // si ingresa algo tendra descuento.
-    let cuponExiste = false;
-    
-    if (cupon.trim().length>0 && cupon != "" && cupon.toLowerCase().trim() != "no"){
-         cuponExiste = true;
+    if (nombreUsuario.trim().toLowerCase() === "salir" || consultaCompra === "no") {
+        alert("Gracias por visitarnos...");
+        salir();
     }
-    let total = calcular_total(cantProducto1, cantProducto2, cantProducto3, cantProducto4, cuponExiste);
-    console.log("El total de tu cuenta es: " + total)
-} else {
-    alert("Cuando vuelvas tus productos te estaran esperando")
 }
+
+
