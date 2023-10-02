@@ -5,15 +5,16 @@ simulación de una web donde se venderan productos de una Banda */
 let nombreUsuario = prompt("Ingrese Nombre de Usuario");
 let terminar = false;
 let consultaCompra = '';
+let agregarProducto = [];
 while (!terminar) {
     if (!encontrarCliente(nombreUsuario)) {
         alert("El nombre ingresado no existe");
         nombreUsuario = prompt("Ingrese un nombre de Usuario Valido para continuar \no escriba salir para cerrar. ");
     } else {
-
+        if(agregarProducto.length<1){
         alert("Bienvenido, " + nombreUsuario + "!");
         consultaCompra = validarRespuesta(prompt("¿Quiere comprar algun producto?, ingrese 'Si' o 'No' "));
-        let agregarProducto = [];
+        }
         while (consultaCompra !== "no") {
             let nombresProductos = productosMocks.map(producto => producto.id + " - " + producto.nombre);
 
@@ -59,21 +60,21 @@ while (!terminar) {
 
 
                 //Mostrar detalle total a pagar
-                console.log("Total a Pagar por los Productos: " + totalOrden + " Iva Incluido");
-                let confirmarCompra = validarRespuesta(prompt("¿Proceder al Pago?: Si - No"));
+                let confirmarCompra = validarRespuesta(prompt("Total a Pagar por los Productos: $" + totalOrden + " Iva Incluido\n¿Proceder al Pago?: Si - No"));
                 if (confirmarCompra === "si") {
                     alert(nuevaOrdenCompra.ordenFinalizada());
                     //Se Agrega al resto de ordenes y se imprimen las ordenes asociadas al cliente.
                     ordenesMocks.push(nuevaOrdenCompra);
+                    console.log("Ordenes asociadas al cliente " + nombreUsuario + ":")
                     console.table(ordenesMocks.filter((cliente) => cliente.rutCliente.includes(encontrarCliente(nombreUsuario).rut)));
                     salir();
 
                 } else {
-                    alert(mensaje())
+                    let condicion = opcionesFinalizacion(parseInt(prompt("Indique la opcion que quiere\n1.- Agregar Otro Producto\n2.- Eliminar un Producto\n3. Salir")))
                 }
 
             } else {
-                alert(mensaje())
+                let condicion = opcionesFinalizacion(parseInt(prompt("Indique la opcion que quiere\n1.- Agregar Otro Producto\n2.- Eliminar un Producto\n3. Salir")))
             }
 
         }

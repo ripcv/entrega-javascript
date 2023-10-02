@@ -59,3 +59,33 @@ function mensaje() {
 function salir() {
     terminar = true;
 }
+
+function opcionesFinalizacion(condicion){
+    switch (condicion) {
+        case 1:
+            consultaCompra = "si";
+            break;
+        case 2:
+            console.clear();
+            console.log("Elija Producto a Eliminar");
+            for (let i = 0; i < agregarProducto.length; i++) {
+                let productoNombre = encontarProducto(agregarProducto[i].id.toString());
+                console.log("ID: " + (i+1) + "\nProducto: " + productoNombre.nombre);
+            }
+            let idEliminar = parseInt(prompt("Ingrese Elemento a Eliminar: "));
+            let producoExiste = agregarProducto.find(producto => producto.id === idEliminar)
+            if (producoExiste) {
+                agregarProducto.splice(idEliminar-1,1);
+            } else {
+                alert("Producto no se encuentra en el carrito");
+            }
+            consultaCompra = "si";
+            break;
+        case 3:
+            alert(mensaje())
+            break;
+        default:
+            alert("Ingrese una Opcion Correcta")
+            break;
+    }
+}
