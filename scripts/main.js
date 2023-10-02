@@ -1,7 +1,7 @@
 /* Segunda Pre-Entrega JS, realizaremos una 
 simulación de una web donde se venderan productos de una Banda */
 
-//Para ingresar de inmediato escribir Raul y por el momento no se autenticara con la clave.
+//Para ingresar de inmediato escribir Raul, Luis o Ana
 let nombreUsuario = prompt("Ingrese Nombre de Usuario");
 let terminar = false;
 let consultaCompra = '';
@@ -64,6 +64,7 @@ while (!terminar) {
                 if (confirmarCompra === "si") {
                     alert(nuevaOrdenCompra.ordenFinalizada());
                     //Se Agrega al resto de ordenes y se imprimen las ordenes asociadas al cliente.
+                    //Raul tiene toda las ordenes creadas, si se ejecuta con Luis o Ana mostrara solo la actual.
                     ordenesMocks.push(nuevaOrdenCompra);
                     console.log("Ordenes asociadas al cliente " + nombreUsuario + ":")
                     console.table(ordenesMocks.filter((cliente) => cliente.rutCliente.includes(encontrarCliente(nombreUsuario).rut)));

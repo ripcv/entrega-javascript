@@ -29,14 +29,6 @@ function fechaFormateada(fecha) {
     return anio + "/" + mes + "/" + dia;
 }
 
-function calcularTotal(productos) {
-    let total = 0;
-    for (i = 0; i < productos.length; i++) {
-        total = productos[i].valor * productos[i].cantidad;
-    }
-    return total;
-}
-
 function validarRespuesta(respuesta) {
     while (respuesta.trim().toLowerCase() !== 'si' && respuesta.trim().toLowerCase() !== 'no') {
         respuesta = prompt("Favor Ingrese SI o NO");
