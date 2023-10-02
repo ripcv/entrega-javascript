@@ -47,7 +47,7 @@ function validarRespuesta(respuesta) {
 function validarNumero(numero){
     while (isNaN(numero))
     {
-        numero = prompt ("Favor Ingresar la cantidad en numero") ;
+        numero = parseInt(prompt ("Favor Ingresar la cantidad en numero")) ;
     }
     return numero;
 }

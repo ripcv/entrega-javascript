@@ -22,9 +22,13 @@ while (!terminar) {
                 let cantidad = validarNumero(parseInt(prompt("Producto: " + productoSeleccionado.nombre + "\n¿Cuantos quiere agregar al carro? \nvalor por c/u: $" + productoSeleccionado.valor)))
                 //por ahora no se valida que la cantidad ingresada sea menor o igual al stock del producto.
                 let productoAComprar = new Producto(productoSeleccionado.id, productoSeleccionado.valor, cantidad)
-                agregarProducto.push(productoAComprar);
-
-            } else{
+                let producoExiste = agregarProducto.find(producto => producto.id === productoAComprar.id)
+                if (producoExiste) {
+                    producoExiste.cantidad += productoAComprar.cantidad;
+                } else {
+                    agregarProducto.push(productoAComprar);
+                }
+            } else {
                 alert("Producto no encontrado, intentelo nuevamente");
             }
             //Mostramos detalle de los productos en el carrito
@@ -34,8 +38,8 @@ while (!terminar) {
                 let productoNombre = encontarProducto(agregarProducto[i].id.toString());
                 console.log("Producto: " + productoNombre.nombre + "\nValor: " + agregarProducto[i].valor + "\nCantidad: " + agregarProducto[i].cantidad);
             }
-            if(productoSeleccionado !== null){
-            consultaCompra = validarRespuesta(prompt("¿Quiere agregar otro producto, ingrese 'Si' o 'No' "));
+            if (productoSeleccionado !== null) {
+                consultaCompra = validarRespuesta(prompt("¿Quiere agregar otro producto, ingrese 'Si' o 'No' "));
             }
         }
 
@@ -49,7 +53,7 @@ while (!terminar) {
                 let fechaEnvio = fechaFormateada(new Date(new Date().getTime() + 48 * 60 * 60 * 1000));
                 const IVA = 1.19;
                 //Se Calcula el total de la orden
-                const totalOrden = agregarProducto.reduce((total, producto) => total + producto.total(), 0)*IVA;
+                const totalOrden = agregarProducto.reduce((total, producto) => total + producto.total(), 0) * IVA;
                 //Creamos el objeto OrdendeCompra 
                 let nuevaOrdenCompra = new OrdenCompra(encontrarCliente(nombreUsuario).rut, ordenesMocks[ordenesMocks.length - 1].idOrden + 1, agregarProducto, fechaActual, fechaEnvio, totalOrden);
 
