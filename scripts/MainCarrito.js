@@ -1,0 +1,2 @@
+mostrarCarrito();
+actualizarIconoCarrito();

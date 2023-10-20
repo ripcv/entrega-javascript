@@ -1,10 +1,5 @@
 
 // Funciones
-function encontrarCliente(nombre) {
-    return clientesMocks.find(cliente => cliente.nombre.trim().toLowerCase() === nombre.trim().toLowerCase())
-
-}
-
 function encontarProducto(buscarProducto) {
     if(buscarProducto.length == 0 ){
         alert ("Debe Ingresar el ID o minimo 3 letras")
@@ -28,56 +23,119 @@ function fechaFormateada(fecha) {
 
     return anio + "/" + mes + "/" + dia;
 }
-
-function validarRespuesta(respuesta) {
-    while (respuesta.trim().toLowerCase() !== 'si' && respuesta.trim().toLowerCase() !== 'no') {
-        respuesta = prompt("Favor Ingrese SI o NO");
-    }
-    return respuesta.trim().toLowerCase();
-}
-
-function validarNumero(numero){
-    while (isNaN(numero))
-    {
-        numero = parseInt(prompt ("Favor Ingresar la cantidad en numero")) ;
-    }
-    return numero;
-}
-
-function mensaje() {
-    salir();
-    return "Sus productos seran guardados por 24 hrs.";
-}
-function salir() {
-    terminar = true;
-}
-
-function opcionesFinalizacion(condicion){
-    switch (condicion) {
-        case 1:
-            consultaCompra = "si";
-            break;
-        case 2:
-            console.clear();
-            console.log("Elija Producto a Eliminar");
-            for (let i = 0; i < agregarProducto.length; i++) {
-                let productoNombre = encontarProducto(agregarProducto[i].id.toString());
-                console.log("ID: " + (i+1) + "\nProducto: " + productoNombre.nombre);
+ function mostrarCarrito(carrito){
+    console.clear();
+            console.log("Productos Actuales en el carrito");
+            for (let i = 0; i < carrito.length; i++) {
+                let productoNombre = encontarProducto(carrito[i].id.toString());
+                console.log("Producto: " + productoNombre.nombre + "\nValor: " + carrito[i].valor + "\nCantidad: " + carrito[i].cantidad);
             }
-            let idEliminar = parseInt(prompt("Ingrese Elemento a Eliminar: "));
-            let producoExiste = agregarProducto.find(producto => producto.id === idEliminar)
-            if (producoExiste) {
-                agregarProducto.splice(idEliminar-1,1);
-            } else {
-                alert("Producto no se encuentra en el carrito");
-            }
-            consultaCompra = "si";
-            break;
-        case 3:
-            alert(mensaje())
-            break;
-        default:
-            alert("Ingrese una Opcion Correcta")
-            break;
+} 
+
+
+const DOMtotal = document.querySelector('#total');
+const DOMbotonVaciar = document.querySelector('#boton-vaciar');
+const miLocalStorage = window.localStorage;
+
+//Pintamos los productos en el HTML
+function mostrarProductos(){
+    const DOMitems = document.querySelector('#productos');
+    productosMocks.forEach((producto) => {
+        const NODO = document.createElement('div');
+        NODO.classList.add('tarjeta-producto');
+
+        const nodoImagen = document.createElement('img');
+        nodoImagen.setAttribute('src', `../assets/images/tienda/${producto.img}`)
+
+        const nodoTitulo = document.createElement('h5');
+        nodoTitulo.textContent = producto.nombre;
+
+        const nodoDetalle = document.createElement('p');
+        nodoDetalle.textContent = producto.descripcion;
+
+        const nodoPrecio = document.createElement('span');
+        nodoPrecio.textContent = `${divisa}${producto.valor}`;
+
+        const nodoBoton = document.createElement('button');
+        nodoBoton.classList.add('boton-principal');
+        nodoBoton.textContent = 'Comprar';
+        nodoBoton.setAttribute('idproducto', producto.id);
+        nodoBoton.addEventListener('click', agregarProductoAlCarro);
+
+        NODO.appendChild(nodoImagen);
+        NODO.appendChild(nodoTitulo);
+        NODO.appendChild(nodoDetalle);
+        NODO.appendChild(nodoPrecio);
+        NODO.appendChild(nodoBoton);
+        DOMitems.appendChild(NODO);
     }
+
+)} 
+
+ function mostrarCarrito() {
+    const productos = [];
+    if(carrito){
+    // Los convertimos nuevamente a una clase
+    carrito.forEach(p => {
+        const producto = new Producto(p.id, p.nombre,p.valor, p.cantidad)
+        productos.push(producto);
+    })
+    console.table(productos)
+    let cuerpoCarrito = document.getElementById("detalleCarrito");
+    const mostrarDetalle = (e = []) => {
+        cuerpoCarrito.innerHTML = "";
+        e.forEach((productos) => { 
+            const unRegistro = document.createElement("tr");
+            unRegistro.innerHTML =`
+            <td scope="col">${productos.nombre} </td>
+            <td scope="col">${productos.cantidad} </td>
+            <td scope="col">${divisa}${productos.valor} </td>
+            <td scope="col">${divisa}${productos.total()} </td>
+            <td scope="col"><button> X </button> </td>
+            `;
+        cuerpoCarrito.appendChild(unRegistro);
+    });
+    }
+
+  mostrarDetalle(productos);
+  }else{
+    showErrorMessages (["No Hay Productos en el Carrito Aun"], true);
+  }
 }
+function agregarProductoAlCarro(e){
+    let productoAgregar = encontarProducto(e.target.getAttribute('idproducto'))
+    let productoAComprar = new Producto(productoAgregar.id,productoAgregar.nombre, productoAgregar.valor, 1)
+    let productoExiste = carrito.find(producto => producto.id === productoAgregar.id);
+    
+    if(productoExiste){
+        productoExiste.cantidad++ ;
+    }else{
+        productoAgregar.cantidad = 1;
+        carrito.push(productoAComprar);
+        
+    }
+   
+    guardarEnLocalStorage("carrito",carrito);
+    actualizarIconoCarrito(); 
+}
+
+function guardarEnLocalStorage (key,data) {
+    miLocalStorage.setItem(key, JSON.stringify(data));
+}
+
+function recuperarEnLocalStorage(key) {
+    const datosGuardados = JSON.parse(localStorage.getItem(key));
+    return datosGuardados || false;
+}
+
+
+function actualizarIconoCarrito() {
+    const carritoIcon = document.querySelector('.carrito i');
+    let cantidad = 0;
+    carrito.forEach(e => {
+        cantidad += e.cantidad
+    });
+    
+    cantidad > 0 ? carritoIcon.textContent = cantidad : carritoIcon.textContent = ""
+}
+

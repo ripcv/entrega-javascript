@@ -15,12 +15,29 @@ class OrdenCompra {
 }
 // definimos la clase para crear objeto producto para agregarlo al carro de compras
 class Producto {
-    constructor(id, valor, cantidad) {
+    constructor(id, nombre, valor, cantidad) {
         this.id = id;
+        this.nombre = nombre;
         this.valor = valor;
         this.cantidad = cantidad;
     }
     total = () => {
         return this.valor * this.cantidad;
+    }
+}
+
+// definimos la clase para crear objeto cliente
+
+class Cliente {
+    constructor(nombre, apellido, rut, fechaNacimiento, correo, clave){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.rut = rut;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correo = correo;
+        this.clave = clave;
+    }
+    toString = () => {
+        return this.nombre + " " + this.apellido;
     }
 }

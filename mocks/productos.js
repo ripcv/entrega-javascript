@@ -6,6 +6,7 @@ let productosMocks = [
         valor: 25000,
         stock: 15,
         promocion: "Si",
+        img: 'bolso_blanco.jpg'
     },
     {
         id: 2,
@@ -14,6 +15,7 @@ let productosMocks = [
         valor: 10000,
         stock: 20,
         promocion: "Si" ,
+        img: 'gorro_lana.jpg'
     },
     {
         id : 3,
@@ -22,6 +24,7 @@ let productosMocks = [
         valor:15000 ,
         stock:15 ,
         promocion: "No",
+        img: 'jockey.jpg'
     },
     {
         id : 4,
@@ -30,6 +33,7 @@ let productosMocks = [
         valor: 5000,
         stock: 40 ,
         promocion:"No" ,
+        img: 'llavero.jpg'
     },
     {
         id : 5,
@@ -38,6 +42,7 @@ let productosMocks = [
         valor: 25000 ,
         stock: 15,
         promocion: "No" ,
+        img: 'mochila.jpg'
     },
     {
         id : 6,
@@ -46,6 +51,7 @@ let productosMocks = [
         valor: 15000,
         stock: 10,
         promocion:"Si" ,
+        img: 'muñequera1.jpg'
     },
     {
         id :7,
@@ -54,6 +60,7 @@ let productosMocks = [
         valor: 5000,
         stock: 50,
         promocion:"No" ,
+        img: 'pendrive.jpg'
     },
     {
         id: 8,
@@ -62,6 +69,7 @@ let productosMocks = [
         valor: 20000 ,
         stock: 30,
         promocion: "Si" ,
+        img: 'polera_blanca.jpg'
     },
     {
         id : 9,
@@ -70,6 +78,7 @@ let productosMocks = [
         valor: 20000,
         stock: 20,
         promocion: "No",
+        img: 'polera_negra_img.jpg'
     },
     {
         id :10,
@@ -78,6 +87,7 @@ let productosMocks = [
         valor: 5000,
         stock: 25 ,
         promocion:"Si" ,
+        img: 'tazon.jpg'
     },
     {
         id :11,
@@ -86,6 +96,7 @@ let productosMocks = [
         valor: 25000,
         stock: 20 ,
         promocion:"No" ,
+        img: 'sombrero.jpg'
     },
     {
         id :12,
@@ -94,5 +105,6 @@ let productosMocks = [
         valor: 35000,
         stock: 15 ,
         promocion:"No" ,
+        img: 'vinilo.png'
     }
 ]
