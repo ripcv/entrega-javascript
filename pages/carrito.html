@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--SEO-->
-    <meta name="description" content="Accede a tu cuenta con facilidad en nuestra página de inicio de sesión. Ingresa tus credenciales de manera segura y explora todo lo que tenemos para ofrecer. ¡Únete a la comunidad de La Grande Armée!">
+    <meta name="description" content="¿Tienes preguntas o comentarios? Comunícate con nosotros a través de nuestra página de contacto. Estamos aquí para escucharte.">
     <title>La Grande Arm​é​e</title>
     <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,8 +15,8 @@
 
 </head>
 <body>
-     <!-- Menu-->
-     <nav class="nav-bar">
+    <!-- Menu-->
+    <nav class="nav-bar">
         <div class="logo">
             <a href="../index.html">
                 <img src="../assets/images/logo.png" alt="logo">
@@ -36,12 +36,11 @@
                   <a class="dropdown-item" href="./videos.html">Videos</a>
                 </div>
               </li>
-            <li> <a href="./pages/tienda.html">Tienda</a></li>
-            <li> <a href="./index.html">Login</a></li>
+            <li> <a href="./tienda.html">Tienda</a></li>
+            <li> <a href="./login.html">Login</a></li>
  </ul>
         <div class="carrito">
-                <!--Solo para mostrar contenido, aun sin funcionalidad-->
-                <a href="./pages/carrito.html"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a>
+                 <i class="fa-sharp fa-solid fa-cart-shopping"></i>
             </div>
     </nav>     
     <header class="header">    
@@ -50,35 +49,44 @@
     <!--Contenido-->
     <main class="main">
         <section class="contenido">
-           <div class="contacto">
-                <h1 class="titulo__formato">Login</h1>
-                <form id="loginForm" class="formulario" method="get" action="./tienda.html">
-                    <div class="formulario__correo">
-                        <label for="correo">Correo electronico:</label>
-                        <input type="text" name="correo" id="correo" placeholder="Ingrese su  Correo" required>
+          <form action="">
+            <div class="datos-comprador">
+                Direccion
+                Metodo de Pago
+            </div>
+            <div class="carro">
+                <h1 class="titulo__formato">Carrito de Compras</h1>
+                <div class="productos">
+                    <div class="hide" id="mensaje"></div>
+                    <div id="carrito" class="producto-en-carrito">
+                         <table class="tabla-resumen">
+                           <thead class="text-center">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead> 
+                         <tbody id="detalleCarrito"></tbody>
+                        </table> 
+                    </div> 
+                    <div class="total-container">
+                        <div class="total-item">Subtotal: $<span id="subtotal">55.000</span></div>
+                        <div class="total-item">IVA: $<span id="IVA">14.450</span></div>
+                        <div class="total-item">TOTAL: $<span id="total">65.450</span></div>
+                        <a href="./ordenes.html"><button type="button" class="boton-principal">Finalizar Compra</button></a>
                     </div>
-                    <div class="formulario__password">
-                        <label for="password">Ingrese su clave:</label>
-                        <input type="password" autocomplete="on" name="password" id="password" placeholder="Ingrese su  Clave" required>
-                    </div>
-                    <div class="hide" id="mensaje">
-                       
-                    </div>
-                    <div class="formulario__boton">
-                        <button class="boton" type="submit">Entrar</button>
-                        <button class="boton" type="reset">Borrar</button>
-                    </div>
-                    <div class="datos_login">
-                        <!--Contenido solo para dar formato, sin funcionalidad-->
-                        <a href="#">Recuperar contraseña</a>
-                        <a href="#">Registrarse</a>
-                    </div>
-                </form>
-
+                    
+                </div>
                 
-           </div>
+            </div>
+          </form>
+            
         </section>
     </main>
+    
 
      <!-- Footer-->
      <footer class="footer">
@@ -110,10 +118,13 @@
                 <p>La Grande Arm​é​e 2023</p>
         </div>
     </footer>
-    <script src="./classes/clases.js"></script>
-    <script src="./mocks/clientes.js"></script>
-    <script src="./scripts/mensaje.js"></script>
-    <script src="./scripts/funciones.js"></script>
-    <script src="./scripts/mainLogin.js"></script>
+    <script src="../mocks/productos.js"></script>
+    <script src="../mocks/clientes.js"></script>
+    <script src="../mocks/ordenes.js"></script>
+    <script src="../scripts/funciones.js"></script>
+    <script src="../scripts/mensaje.js"></script>
+    <script src="../classes/clases.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/MainCarrito.js"></script>
 </body>
 </html>

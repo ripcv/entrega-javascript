@@ -686,6 +686,10 @@
   text-decoration: none;
 }
 
+.contacto .formulario .formulario__mensaje{
+  display: none;
+}
+
 /**  Fin Contacto y Login**/
 /** Conciertos **/
 .conciertos {
@@ -811,4 +815,86 @@
 
 /** Fin Videos **/
 
+/** Inicio Carrito **/
+.carro {
+  width: 80%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.productos{
+  border: 2px solid black;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.producto-en-carrito {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.producto-en-carrito h3 {
+  margin-top: 0;
+}
+
+.cantidad-input {
+  width: 60px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.total-producto {
+  font-weight: bold;
+}
+
+.total {
+  margin-top: 20px;
+  font-size: 18px;
+  text-align: right;
+}
+
+/* Para el diseño de la tabla de resumen de productos */
+.tabla-resumen {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.tabla-resumen th, .tabla-resumen td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.tabla-resumen th {
+  background-color: #f2f2f2;
+}
+
+.tabla-resumen ul li{
+  list-style: none;
+}
+
+/* Estilos para la fila del total general */
+.total-container {
+    font-size: 18px;
+    border: 2px solid black;
+    width: 200px;
+    text-align: right;
+    float: right;
+}
+.total-item {
+  margin-top: 10px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  padding: 0 5px;
+}
+
+.total-container button{
+  width: 100%;
+  border-radius: 0;
+}
+
+
+/** Fin Carrito **/
 /*# sourceMappingURL=styles.css.map */
