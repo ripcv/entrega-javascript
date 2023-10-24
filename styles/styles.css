@@ -816,10 +816,34 @@
 /** Fin Videos **/
 
 /** Inicio Carrito **/
+
+.contenido-carrito{
+  margin: 0 300px !important;
+}
+.formFinalizarCompra{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.datos-comprador{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  border: 2px solid black;
+  padding: 20px;
+}
+.datos-comprador input{
+  width: 90%;
+
+}
+
 .carro {
-  width: 80%;
-  margin: 0 auto;
+  width: 60%;
   font-family: Arial, sans-serif;
+ 
 }
 
 .productos{

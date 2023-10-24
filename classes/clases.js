@@ -15,9 +15,9 @@ class OrdenCompra {
 }
 // definimos la clase para crear objeto producto para agregarlo al carro de compras
 class Producto {
-    constructor(id, nombre, valor, cantidad) {
+    constructor(id, nombreProducto, valor, cantidad) {
         this.id = id;
-        this.nombre = nombre;
+        this.nombreProducto = nombreProducto;
         this.valor = valor;
         this.cantidad = cantidad;
     }

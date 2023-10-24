@@ -1,7 +1,7 @@
 let productosMocks = [
     {
         id: 1,
-        nombre:"Bolso Blanco",
+        nombreProducto:"Bolso Blanco",
         descripcion: "Bolso Multiuso hecho en cuero vegano",
         valor: 25000,
         stock: 15,
@@ -10,7 +10,7 @@ let productosMocks = [
     },
     {
         id: 2,
-        nombre:"Gorro de Lana",
+        nombreProducto:"Gorro de Lana",
         descripcion: "Ideal para los mese de invierno" ,
         valor: 10000,
         stock: 20,
@@ -19,7 +19,7 @@ let productosMocks = [
     },
     {
         id : 3,
-        nombre:"Jockey" ,
+        nombreProducto:"Jockey" ,
         descripcion: "Protejete del Sol" ,
         valor:15000 ,
         stock:15 ,
@@ -28,7 +28,7 @@ let productosMocks = [
     },
     {
         id : 4,
-        nombre: "Llavero" ,
+        nombreProducto: "Llavero" ,
         descripcion:"Para llevar tus llaves con el Stoner" ,
         valor: 5000,
         stock: 40 ,
@@ -37,7 +37,7 @@ let productosMocks = [
     },
     {
         id : 5,
-        nombre: "Mochila" ,
+        nombreProducto: "Mochila" ,
         descripcion: "Para que no te falte nada" ,
         valor: 25000 ,
         stock: 15,
@@ -46,7 +46,7 @@ let productosMocks = [
     },
     {
         id : 6,
-        nombre: "Muñequera",
+        nombreProducto: "Muñequera",
         descripcion: "Hecho en cuero y metal forjado" ,
         valor: 15000,
         stock: 10,
@@ -55,7 +55,7 @@ let productosMocks = [
     },
     {
         id :7,
-        nombre: "Pendrive",
+        nombreProducto: "Pendrive",
         descripcion: "Lleva tus archivos siempre contigo" ,
         valor: 5000,
         stock: 50,
@@ -64,7 +64,7 @@ let productosMocks = [
     },
     {
         id: 8,
-        nombre:"Polera Blanca" ,
+        nombreProducto:"Polera Blanca" ,
         descripcion: "Toda las Tallas Unisex",
         valor: 20000 ,
         stock: 30,
@@ -73,7 +73,7 @@ let productosMocks = [
     },
     {
         id : 9,
-        nombre: "Polera Negra" ,
+        nombreProducto: "Polera Negra" ,
         descripcion: "Toda las Tallas Unisex",
         valor: 20000,
         stock: 20,
@@ -82,7 +82,7 @@ let productosMocks = [
     },
     {
         id :10,
-        nombre:"Tazon" ,
+        nombreProducto:"Tazon" ,
         descripcion:"Personalizados con distintos diseños" ,
         valor: 5000,
         stock: 25 ,
@@ -91,7 +91,7 @@ let productosMocks = [
     },
     {
         id :11,
-        nombre:"Sombrero" ,
+        nombreProducto:"Sombrero" ,
         descripcion:"100% Cuero" ,
         valor: 25000,
         stock: 20 ,
@@ -100,7 +100,7 @@ let productosMocks = [
     },
     {
         id :12,
-        nombre:"Vinilo Normandia" ,
+        nombreProducto:"Vinilo Normandia" ,
         descripcion:"Edicion Limitada" ,
         valor: 35000,
         stock: 15 ,

@@ -37,7 +37,7 @@
                 </div>
               </li>
             <li> <a href="./tienda.html">Tienda</a></li>
-            <li> <a href="./login.html">Login</a></li>
+            <li> <a href="../index.html">Login</a></li>
  </ul>
         <div class="carrito">
                  <i class="fa-sharp fa-solid fa-cart-shopping"></i>
@@ -48,14 +48,23 @@
     </header>
     <!--Contenido-->
     <main class="main">
-        <section class="contenido">
-          <form action="">
-            <div class="datos-comprador">
-                Direccion
-                Metodo de Pago
+        <h1 class="titulo__formato">Carrito de Compras</h1>
+        <section class="contenido contenido-carrito">
+          <form action="" class="formFinalizarCompra">
+            <div class="datos-comprador" id="datos-comprador">
+                <h3>Datos Comprador</h3>
+                <label for="nombreUsuario">Nombre</label>
+                <input type="text" class="input-text" name="nombreUsuario" id="nombreUsuario">
+                <label for="direccionUsuario">Direccion Envio</label>
+                <input type="text" class="input-text" name="direccionUsuario" id="direccionUsuario" placeholder="Ingresa la direccion">
+                <label for="correoUsuario">Correo</label>
+                <input type="text" class="input-text" name="correoUsuario" id="correoUsuario">
+                <label for="telefonoContacto">Telefono</label>
+                <input type="text" class="input-text" name="telefonoContacto" id="telefonoContacto">
             </div>
+
             <div class="carro">
-                <h1 class="titulo__formato">Carrito de Compras</h1>
+                
                 <div class="productos">
                     <div class="hide" id="mensaje"></div>
                     <div id="carrito" class="producto-en-carrito">
@@ -69,14 +78,16 @@
                                 <th></th>
                             </tr>
                         </thead> 
-                         <tbody id="detalleCarrito"></tbody>
+                         <tbody id="detalleCarrito">
+                            <!--Se agregan los productos usando js-->
+                         </tbody>
                         </table> 
                     </div> 
-                    <div class="total-container">
-                        <div class="total-item">Subtotal: $<span id="subtotal">55.000</span></div>
-                        <div class="total-item">IVA: $<span id="IVA">14.450</span></div>
-                        <div class="total-item">TOTAL: $<span id="total">65.450</span></div>
-                        <a href="./ordenes.html"><button type="button" class="boton-principal">Finalizar Compra</button></a>
+                    <div class="total-container" id="total-container">
+                        <div class="total-item">Subtotal: <span id="subtotal">0</span></div>
+                        <div class="total-item">IVA: <span id="iva">0</span></div>
+                        <div class="total-item">TOTAL: <span id="total">0</span></div>
+                        <button type="button" id="finalizarcompra" class="boton-principal">Finalizar Compra</button>
                     </div>
                     
                 </div>

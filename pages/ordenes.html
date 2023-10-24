@@ -45,12 +45,11 @@
                     <a class="dropdown-item" href="./videos.html">Videos</a>
                 </div>
             </li>
-            <li> <a href="../index.html">Tienda</a></li>
-            <li> <a href="./login.html">Login</a></li>
+            <li> <a href="./tienda.html">Tienda</a></li>
+            <li> <a href="../index.html">Login</a></li>
         </ul>
         <div class="carrito">
-            <!--Solo para mostrar contenido, aun sin funcionalidad-->
-            <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+            <a href="./carrito.html"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a>
         </div>
     </nav>
     <header class="header">
@@ -62,72 +61,23 @@
             <div class="historia-ordenes">
                 <h1 class="titulo__formato">Historial de Pedidos</h1>
                 <div class="ordenes">
-                    <div class="orden-procesada">
+                    <div  class="orden-procesada">
                         <table class="tabla-resumen">
-                            <tr>
+                            <thead class="text-center">
+                             <tr>
                                 <th>Orden ID</th>
                                 <th>Productos</th>
                                 <th>Fecha Compra</th>
                                 <th>Fecha Envio</th>
                                 <th>Total Compra</th>
-                            </tr>
-                            <tr>
-                                <td>115</td>
-                                <td>
-                                    <ul>
-                                        <li>Polera Negra x2</li>
-                                        <li>Mochila x1</li>
-                                    </ul>
-                                </td>
-                                <td>2023/09/21</td>
-                                <td>2023/09/25</td>
-                                <td>$45.000</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="orden-procesada">
+                             </tr>
+                         </thead> 
+                          <tbody id="orden-procesada">
+                             <!--Se agregan los productos usando js-->                           
+                          </tbody>
+                         </table> 
                         <table class="tabla-resumen">
-                            <tr>
-                                <th>Orden ID</th>
-                                <th>Productos</th>
-                                <th>Fecha Compra</th>
-                                <th>Fecha Envio</th>
-                                <th>Total Compra</th>
-                            </tr>
-                            <tr>
-                                <td>136</td>
-                                <td>
-                                    <ul>
-                                        <li>Vinilo Normandia x1</li>
-                                    </ul>
-                                </td>
-                                <td>2023/09/24</td>
-                                <td>2023/09/27</td>
-                                <td>$35.000</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="orden-procesada">
-                        <table class="tabla-resumen">
-                            <tr>
-                                <th>Orden ID</th>
-                                <th>Productos</th>
-                                <th>Fecha Compra</th>
-                                <th>Fecha Envio</th>
-                                <th>Total Compra</th>
-                            </tr>
-                            <tr>
-                                <td>145</td>
-                                <td>
-                                    <ul>
-                                        <li>Gorro de Lana x1</li>
-                                        <li>Llavero x3</li>
-                                    </ul>
-                                </td>
-                                <td>2023/09/25</td>
-                                <td>2023/09/29</td>
-                                <td>$55.000</td>
-                            </tr>
+                            
                         </table>
                     </div>
                 </div>
@@ -174,6 +124,15 @@
             <p>La Grande Arm​é​e 2023</p>
         </div>
     </footer>
+
+    <script src="../mocks/productos.js"></script>
+    <script src="../mocks/clientes.js"></script>
+    <script src="../mocks/ordenes.js"></script>
+    <script src="../scripts/funciones.js"></script>
+    <script src="../scripts/mensaje.js"></script>
+    <script src="../classes/clases.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/mainOrdenes.js"></script>
 </body>
 
 </html>
