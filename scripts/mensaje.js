@@ -22,8 +22,6 @@ function showMessages(
     messagesTitle.innerText = title;
   }
 
-
-
   // Añadimos unos a uno los mensajes
   if (messages.length) {
     let messagesList = document.querySelector("#errorsMessages ul");

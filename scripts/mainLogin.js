@@ -5,14 +5,18 @@ miLogin.addEventListener("submit",(e) => {
     let claveUsuario = document.getElementById("password").value;
 
 
-if(isExisteCliente(clientes,correoUsuario)){
-    const unCliente = getCliente(clientes,correoUsuario)
-    console.table(unCliente);
+if(isExisteCliente(clientesMocks,correoUsuario)){
+    const unCliente = getCliente(clientesMocks,correoUsuario)
     if(unCliente.clave===claveUsuario){
         showSuccessMessages(["Login Correcto"], true);
         guardarEnLocalStorage("usuario",unCliente);
+        const ordenesCliente = ordenesMocks.filter(orden => orden.rutCliente === unCliente.rut);
+        
+        guardarEnLocalStorage("ordenCompra",ordenesCliente);
+      
+      
         setTimeout(function() {
-            window.location.href = "./pages/tienda.html";
+        //    window.location.href = "./pages/tienda.html";
         }, 1000);
     }else{
         showErrorMessages (["Clave Incorrecta, intente nuevamente"], true);
