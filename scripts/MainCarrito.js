@@ -10,7 +10,7 @@ botonesEliminar.forEach(boton => {
     });
 });
 
-//Actualizamos la cantidad
+//Actualizamos la cantidad del producto si se cambia el numero en el input.
 const camposCantidad = document.querySelectorAll('.cantidad-input');
 camposCantidad.forEach(cantidad => {
     cantidad.addEventListener('change', (event) => {
@@ -38,6 +38,7 @@ const correoUsuario = document.getElementById("correoUsuario");
 const telefonoUsuario = document.getElementById("telefonoContacto");
 
 
+
 const finalizarCompra = document.getElementById("finalizarcompra");
 finalizarCompra.onclick = function () {
     if (validarCampos()) {
@@ -45,7 +46,8 @@ finalizarCompra.onclick = function () {
         let fechaEnvio = fechaFormateada(new Date(new Date().getTime() + 48 * 60 * 60 * 1000));
         const productoOrden = [];
         const nuevaOrden = recuperarEnLocalStorage("ordenCompra") || [];
-
+        //Recorremos los productos del carrito y lo agregamos a un nuevo array 
+        //solo con los datos que necesitamos para la orden.
         carrito.forEach(producto => {
             const productoNuevo = {
                 id: producto.id,
@@ -54,6 +56,8 @@ finalizarCompra.onclick = function () {
             };
             productoOrden.push(productoNuevo);
         })
+
+        //Obtenemos los datos del pago y creamos la nueva Orden que posteriormente guardamos en el storage.
         const totalCompraTexto = document.getElementById("total").innerText;
         const totalCompraNumerico = parseFloat(totalCompraTexto.replace(/[^\d.-]/g, ''));
         const orden = {

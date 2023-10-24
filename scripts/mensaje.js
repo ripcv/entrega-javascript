@@ -1,3 +1,5 @@
+//Código reutilizado de la clase
+
 // Sección para definir funcionalidad genérica para mostrar mensajes de error en la UI en un componente estático dentro de la página (no es un toast).
 const messagesContainer = document.getElementById("mensaje");
 /**

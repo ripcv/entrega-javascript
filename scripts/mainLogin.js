@@ -1,3 +1,4 @@
+//Capturamos los datos desde el form del login.
 const miLogin = document.getElementById("loginForm");
 miLogin.addEventListener("submit",(e) => {
     e.preventDefault();
@@ -5,6 +6,7 @@ miLogin.addEventListener("submit",(e) => {
     let claveUsuario = document.getElementById("password").value;
 
 
+//Validamos que el cliente exista en la "base", si existe se compara la contraseña.
 if(isExisteCliente(clientesMocks,correoUsuario)){
     const unCliente = getCliente(clientesMocks,correoUsuario)
     if(unCliente.clave===claveUsuario){

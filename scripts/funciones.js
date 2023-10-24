@@ -1,30 +1,8 @@
 
 // Funciones
-function encontrarProducto(buscarProducto) {
-    return productosMocks.find(producto => producto.id === parseInt(buscarProducto));
-
-}
-
-function fechaFormateada(fecha) {
-    let anio = fecha.getFullYear();
-    let mes = fecha.getMonth() + 1;
-    let dia = fecha.getDate();
-
-    if (mes < 10) {
-        mes = "0" + mes;
-    }
-    if (dia < 10) {
-        dia = "0" + dia;
-    }
-
-    return anio + "/" + mes + "/" + dia;
-}
-
-const DOMtotal = document.querySelector('#total');
-const DOMbotonVaciar = document.querySelector('#boton-vaciar');
 const miLocalStorage = window.localStorage;
 
-//Pintamos los productos en el HTML
+//Mostramos los productos en el HTML de la Tienda.
 function mostrarProductos() {
     const DOMitems = document.querySelector('#productos');
     productosMocks.forEach((producto) => {
@@ -59,7 +37,7 @@ function mostrarProductos() {
 
     )
 }
-
+//Mostramos el Carrito en el HTML.
 function mostrarCarrito() {
     if (carrito != "") {
         // Los convertimos nuevamente a una clase
@@ -88,6 +66,9 @@ function mostrarCarrito() {
     }
 }
 
+
+
+//Funciones para manejar el carrito
 
 function agregarProductoAlCarro(e) {
     let productoAgregar = encontrarProducto(e.target.getAttribute('idproducto'))
@@ -139,15 +120,10 @@ function siExisteStock(id, cantidad) {
     }
 }
 
+function encontrarProducto(buscarProducto) {
+    return productosMocks.find(producto => producto.id === parseInt(buscarProducto));
 
-function guardarEnLocalStorage(key, data) {
-    miLocalStorage.setItem(key, JSON.stringify(data));
 }
-
-function recuperarEnLocalStorage(key) {
-    return JSON.parse(localStorage.getItem(key));
-}
-
 
 function actualizarIconoCarrito() {
     const carritoIcon = document.querySelector('.carrito i');
@@ -176,9 +152,23 @@ function actualizarTotal() {
     ivaElement.textContent = `${divisa}${iva}`;
     totalElement.textContent = `${divisa}${total}`;
 }
+/*    */
+
+
+// Funciones para manejar el LocalStorage
+function guardarEnLocalStorage(key, data) {
+    miLocalStorage.setItem(key, JSON.stringify(data));
+}
+
+function recuperarEnLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
+}
+
+/*    */
 
 
 
+//Transformamos a Clase cuando sea necesario.
 function toClass(nombreClase, datos) {
     if (Array.isArray(datos)) {
         return datos.map(elemento => toClass(nombreClase, elemento));
@@ -198,8 +188,10 @@ function toClass(nombreClase, datos) {
     }
 }
 
-// Funciones relacionadas a las Ordenes
+/*              */
 
+
+// Funciones relacionadas a las Ordenes
 function mostrarOrdenes() {
     let cuerpoOrdenes = document.getElementById("orden-procesada");
     
@@ -223,14 +215,6 @@ function mostrarOrdenes() {
     }
     mostrarDetalle(recuperarEnLocalStorage("ordenCompra"));
 }
-
-
-
-function encontrarNombreProducto(idProducto) {
-    const productoEncontrado = productosMocks.find(producto => producto.id === idProducto);
-    return productoEncontrado ? productoEncontrado.nombreProducto : false;
-}
-
 
 function validarCampos() {
     const nombreValido = /^[A-Za-záéíóúü\s]+$/i.test(nombreUsuario.value.trim());
@@ -261,3 +245,23 @@ function validarCampos() {
     }
 }
 
+function fechaFormateada(fecha) {
+    let anio = fecha.getFullYear();
+    let mes = fecha.getMonth() + 1;
+    let dia = fecha.getDate();
+
+    if (mes < 10) {
+        mes = "0" + mes;
+    }
+    if (dia < 10) {
+        dia = "0" + dia;
+    }
+
+    return anio + "/" + mes + "/" + dia;
+}
+
+function encontrarNombreProducto(idProducto) {
+    const productoEncontrado = productosMocks.find(producto => producto.id === idProducto);
+    return productoEncontrado ? productoEncontrado.nombreProducto : false;
+}
+/*                */
