@@ -207,7 +207,7 @@ function mostrarOrdenes() {
             <td scope="col">${productosTexto}</td>
             <td scope="col">${orden.fechaCompra} </td>
             <td scope="col">${orden.fechaEnvio} </td>
-            <td scope="col">${orden.totalCompra} </td>
+            <td scope="col">${divisa}${orden.totalCompra} </td>
             `;
 
             cuerpoOrdenes.appendChild(unRegistro);

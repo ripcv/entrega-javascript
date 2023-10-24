@@ -10,4 +10,14 @@ const IVA = 19
 mainLogin.js
 mainTienda.js
 mainCarrito.js
+
+Datos para logear
+correo: ana@martinez.com
+clave: password
+
+correo: luis@gmail.com
+clave: 01234
+
+correo: raul@alvarez.cl
+clave: 12345
  */
