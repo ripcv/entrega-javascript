@@ -5,7 +5,7 @@ let clientesMocks = [
         rut: "12345678-9",
         fechaNacimiento: "2023/06/26",
         correo: "raul@alvarez.cl",
-        clave: "123456789",
+        clave: "12345",
         },
         {
         nombre: "Luis",
@@ -13,7 +13,7 @@ let clientesMocks = [
         rut: "98765432-1",
         fechaNacimiento: "1990/03/15",
         correo: "luis@gmail.com",
-        clave: "0123456789",
+        clave: "01234",
         },
         {
         nombre: "Ana",

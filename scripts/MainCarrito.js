@@ -43,30 +43,35 @@ finalizarCompra.onclick = function () {
     if (validarCampos()) {
         let fechaActual = fechaFormateada(new Date());
         let fechaEnvio = fechaFormateada(new Date(new Date().getTime() + 48 * 60 * 60 * 1000));
-       const productoOrden = [];
-      
-       carrito.forEach(producto => {
-        const productoNuevo = {
-            id: producto.id,
-            valor: producto.valor,
-            cantidad: producto.cantidad
-        };
-        productoOrden.push(productoNuevo);
-       })
-       const totalCompraTexto = document.getElementById("total").innerText;
-       const totalCompraNumerico = parseFloat(totalCompraTexto.replace(/[^\d.-]/g, ''));
-       const nuevaOrden = {
-                rutCliente: recuperarEnLocalStorage("usuario").rut ,
-                idOrden: ordenesMocks[ordenesMocks.length - 1].idOrden + 1,
-                productos: productoOrden ,
-                fechaCompra: fechaActual,
-                fechaEnvio: fechaEnvio,
-                totalCompra: totalCompraNumerico
-            }; 
+        const productoOrden = [];
+        const nuevaOrden = recuperarEnLocalStorage("ordenCompra") || [];
 
-      guardarEnLocalStorage("ordenCompra",nuevaOrden);
-       localStorage.removeItem("carrito");
-       // window.location.href = "./ordenes.html";
+        carrito.forEach(producto => {
+            const productoNuevo = {
+                id: producto.id,
+                valor: producto.valor,
+                cantidad: producto.cantidad
+            };
+            productoOrden.push(productoNuevo);
+        })
+        const totalCompraTexto = document.getElementById("total").innerText;
+        const totalCompraNumerico = parseFloat(totalCompraTexto.replace(/[^\d.-]/g, ''));
+        const orden = {
+            rutCliente: recuperarEnLocalStorage("usuario").rut,
+            idOrden: nuevaOrden.length === 0 ? (ordenesMocks[ordenesMocks.length - 1].idOrden + 1) : (nuevaOrden[nuevaOrden.length - 1].idOrden + 1),
+            productos: productoOrden,
+            fechaCompra: fechaActual,
+            fechaEnvio: fechaEnvio,
+            totalCompra: totalCompraNumerico
+        };
+        nuevaOrden.push(orden);
+        guardarEnLocalStorage("ordenCompra", nuevaOrden);
+        localStorage.removeItem("carrito");
+        showSuccessMessages([toClass("OrdenCompra",orden).ordenFinalizada()], true);
+        setTimeout(function () {
+            hideMessages();
+            window.location.href = "./ordenes.html";
+        }, 3000);
     }
 }
 

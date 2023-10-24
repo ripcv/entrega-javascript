@@ -203,26 +203,27 @@ function toClass(nombreClase, datos) {
 function mostrarOrdenes() {
     let cuerpoOrdenes = document.getElementById("orden-procesada");
     
-    const mostrarDetalle = (e = []) => {
+    const mostrarDetalle = (ordenes = []) => {
         cuerpoOrdenes.innerHTML = "";
-        e.forEach((ordenes) => {
+        ordenes.forEach((orden) => {
             const unRegistro = document.createElement("tr");
-            const productosTexto = ordenes.productos
+            const productosTexto = orden.productos
                 .map(producto => `${encontrarNombreProducto(producto.id)} (${producto.cantidad})`)
                 .join(', ');
             unRegistro.innerHTML = `
-            <td scope="col">${ordenes.idOrden} </td>
+            <td scope="col">${orden.idOrden} </td>
             <td scope="col">${productosTexto}</td>
-            <td scope="col">${ordenes.fechaCompra} </td>
-            <td scope="col">${ordenes.fechaEnvio} </td>
-            <td scope="col">${ordenes.totalCompra} </td>
+            <td scope="col">${orden.fechaCompra} </td>
+            <td scope="col">${orden.fechaEnvio} </td>
+            <td scope="col">${orden.totalCompra} </td>
             `;
 
             cuerpoOrdenes.appendChild(unRegistro);
-        });
+        }); 
     }
-    mostrarDetalle(recuperarEnLocalStorage("ordenesMocks"));
+    mostrarDetalle(recuperarEnLocalStorage("ordenCompra"));
 }
+
 
 
 function encontrarNombreProducto(idProducto) {
@@ -232,7 +233,7 @@ function encontrarNombreProducto(idProducto) {
 
 
 function validarCampos() {
-    const nombreValido = /^[A-Za-z\s]+$/.test(nombreUsuario.value.trim());
+    const nombreValido = /^[A-Za-záéíóúü\s]+$/i.test(nombreUsuario.value.trim());
     const direccionValida = direccionUsuario.value.trim() !== '';
     const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoUsuario.value.trim());
     const telefonoValido = /^\d{9}$/.test(telefonoUsuario.value.trim());

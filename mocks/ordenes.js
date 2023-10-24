@@ -31,7 +31,7 @@ let ordenesMocks = [
         totalCompra: 35000,
     },
     {
-        rutCliente: "12345678-9",
+        rutCliente: "98765432-1",
         idOrden: 145,
         productos: [{
             id: 2,

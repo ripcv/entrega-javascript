@@ -16,7 +16,7 @@ if(isExisteCliente(clientesMocks,correoUsuario)){
       
       
         setTimeout(function() {
-        //    window.location.href = "./pages/tienda.html";
+        window.location.href = "./pages/tienda.html";
         }, 1000);
     }else{
         showErrorMessages (["Clave Incorrecta, intente nuevamente"], true);
