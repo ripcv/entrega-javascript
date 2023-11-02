@@ -1,9 +1,16 @@
 //Importamos la funciones y variables necesarias
-import { recuperarEnLocalStorage,actualizarCarrito,mostrarProductos,actualizarIconoCarrito } from "./funciones.js";
+import { cargarMenu,recuperarEnLocalStorage,actualizarCarrito,mostrarProductos,actualizarIconoCarrito } from "./funciones.js";
 // Generamos los productos en el html.
-document.addEventListener('DOMContentLoaded', () => {
-mostrarProductos();
 
-});
+cargarMenu().then(() => {
+  
+        actualizarIconoCarrito()
+  }).catch(error => {
+    console.error('Error Menu:', error);
+  });
 
-actualizarIconoCarrito()
+  document.addEventListener('DOMContentLoaded', () => {
+    mostrarProductos();
+    
+    });
+    

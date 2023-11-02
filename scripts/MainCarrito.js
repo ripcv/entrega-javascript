@@ -1,10 +1,15 @@
 //Importamos funciones y variables
 import { carrito } from "./main.js";
-import { mostrarCarrito,actualizarIconoCarrito, recuperarEnLocalStorage, toClass, validarCampos,
+import { cargarMenu, mostrarCarrito,actualizarIconoCarrito, recuperarEnLocalStorage, toClass, validarCampos,
 fechaFormateada,guardarEnLocalStorage } from "./funciones.js";
 
-mostrarCarrito();
-actualizarIconoCarrito();
+cargarMenu().then(() => {
+    mostrarCarrito();
+    actualizarIconoCarrito();
+  }).catch(error => {
+    console.error('Error Menu:', error);
+  });
+
 
 //Capturamos procesos del Carrito
 //Eliminar Producto

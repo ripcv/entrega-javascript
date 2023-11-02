@@ -1,3 +1,13 @@
-import { mostrarOrdenes } from "./funciones.js";
+import { cargarMenu,mostrarOrdenes } from "./funciones.js";
 
-mostrarOrdenes();
+cargarMenu().then(() => {
+    mostrarOrdenes();
+}).catch(error => {
+console.error('Error Menu:', error);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+mostrarProductos();
+
+});
+
