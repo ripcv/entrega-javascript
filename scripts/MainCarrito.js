@@ -1,3 +1,8 @@
+//Importamos funciones y variables
+import { carrito } from "./main.js";
+import { mostrarCarrito,actualizarIconoCarrito, recuperarEnLocalStorage, toClass, validarCampos,
+fechaFormateada,guardarEnLocalStorage } from "./funciones.js";
+
 mostrarCarrito();
 actualizarIconoCarrito();
 
@@ -41,7 +46,7 @@ const telefonoUsuario = document.getElementById("telefonoContacto");
 
 const finalizarCompra = document.getElementById("finalizarcompra");
 finalizarCompra.onclick = function () {
-    if (validarCampos()) {
+    if (validarCampos(telefonoUsuario)) {
         let fechaActual = fechaFormateada(new Date());
         let fechaEnvio = fechaFormateada(new Date(new Date().getTime() + 48 * 60 * 60 * 1000));
         const productoOrden = [];

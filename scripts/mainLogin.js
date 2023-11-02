@@ -1,3 +1,6 @@
+//Importamos la funcion necesaria para el funcionamiento de la pagina.
+import { guardarEnLocalStorage } from './funciones.js';
+
 //Capturamos los datos desde el form del login.
 const miLogin = document.getElementById("loginForm");
 miLogin.addEventListener("submit",(e) => {

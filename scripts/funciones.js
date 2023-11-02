@@ -1,9 +1,11 @@
-
+//Importamos variables
+import { divisa,IVA,carrito} from "./main.js";
+//import { telefonoUsuario } from "./MainCarrito.js";
 // Funciones
 const miLocalStorage = window.localStorage;
 
 //Mostramos los productos en el HTML de la Tienda.
-function mostrarProductos() {
+export function mostrarProductos() {
     const DOMitems = document.querySelector('#productos');
     productosMocks.forEach((producto) => {
         const NODO = document.createElement('div');
@@ -38,7 +40,7 @@ function mostrarProductos() {
     )
 }
 //Mostramos el Carrito en el HTML.
-function mostrarCarrito() {
+export function mostrarCarrito() {
     if (carrito != "") {
         // Los convertimos nuevamente a una clase
         const productos = toClass("Producto", carrito)
@@ -70,7 +72,7 @@ function mostrarCarrito() {
 
 //Funciones para manejar el carrito
 
-function agregarProductoAlCarro(e) {
+export function agregarProductoAlCarro(e) {
     let productoAgregar = encontrarProducto(e.target.getAttribute('idproducto'))
     let productoAComprar = new Producto(productoAgregar.id, productoAgregar.nombreProducto, productoAgregar.valor, 1)
     let productoExiste = carrito.find(producto => producto.id === productoAgregar.id);
@@ -89,7 +91,7 @@ function agregarProductoAlCarro(e) {
     actualizarIconoCarrito();
 }
 
-function actualizarCarrito(e, operacion, nuevacantidad) {
+export function actualizarCarrito(e, operacion, nuevacantidad) {
 
     if (operacion) {
         const carritoActualizado = carrito.filter(producto => parseInt(producto.id) !== parseInt(e));
@@ -111,7 +113,7 @@ function actualizarCarrito(e, operacion, nuevacantidad) {
     actualizarTotal();
 }
 
-function siExisteStock(id, cantidad) {
+export function siExisteStock(id, cantidad) {
     let stockProducto = encontrarProducto(id);
     if (cantidad < stockProducto.stock) {
         return true;
@@ -120,12 +122,12 @@ function siExisteStock(id, cantidad) {
     }
 }
 
-function encontrarProducto(buscarProducto) {
+export function encontrarProducto(buscarProducto) {
     return productosMocks.find(producto => producto.id === parseInt(buscarProducto));
 
 }
 
-function actualizarIconoCarrito() {
+export function actualizarIconoCarrito() {
     const carritoIcon = document.querySelector('.carrito i');
     let cantidad = 0;
     carrito.forEach(e => {
@@ -136,14 +138,14 @@ function actualizarIconoCarrito() {
 }
 
 
-function actualizarTotal() {
+export function actualizarTotal() {
     let subtotal = 0;
     carrito.forEach(producto => {
         subtotal += producto.valor * producto.cantidad;
     })
 
     let iva = subtotal * (IVA / 100);
-    total = subtotal + iva
+    let total = subtotal + iva
     const subtotalElement = document.getElementById("subtotal");
     const ivaElement = document.getElementById("iva");
     const totalElement = document.getElementById("total");
@@ -156,11 +158,11 @@ function actualizarTotal() {
 
 
 // Funciones para manejar el LocalStorage
-function guardarEnLocalStorage(key, data) {
+export function guardarEnLocalStorage(key, data) {
     miLocalStorage.setItem(key, JSON.stringify(data));
 }
 
-function recuperarEnLocalStorage(key) {
+export function recuperarEnLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key));
 }
 
@@ -169,7 +171,7 @@ function recuperarEnLocalStorage(key) {
 
 
 //Transformamos a Clase cuando sea necesario.
-function toClass(nombreClase, datos) {
+export function toClass(nombreClase, datos) {
     if (Array.isArray(datos)) {
         return datos.map(elemento => toClass(nombreClase, elemento));
     }
@@ -192,7 +194,7 @@ function toClass(nombreClase, datos) {
 
 
 // Funciones relacionadas a las Ordenes
-function mostrarOrdenes() {
+export function mostrarOrdenes() {
     let cuerpoOrdenes = document.getElementById("orden-procesada");
     
     const mostrarDetalle = (ordenes = []) => {
@@ -216,7 +218,7 @@ function mostrarOrdenes() {
     mostrarDetalle(recuperarEnLocalStorage("ordenCompra"));
 }
 
-function validarCampos() {
+export function validarCampos(telefonoUsuario) {
     const nombreValido = /^[A-Za-záéíóúü\s]+$/i.test(nombreUsuario.value.trim());
     const direccionValida = direccionUsuario.value.trim() !== '';
     const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoUsuario.value.trim());
@@ -245,7 +247,7 @@ function validarCampos() {
     }
 }
 
-function fechaFormateada(fecha) {
+export function fechaFormateada(fecha) {
     let anio = fecha.getFullYear();
     let mes = fecha.getMonth() + 1;
     let dia = fecha.getDate();
@@ -260,7 +262,7 @@ function fechaFormateada(fecha) {
     return anio + "/" + mes + "/" + dia;
 }
 
-function encontrarNombreProducto(idProducto) {
+export function encontrarNombreProducto(idProducto) {
     const productoEncontrado = productosMocks.find(producto => producto.id === idProducto);
     return productoEncontrado ? productoEncontrado.nombreProducto : false;
 }
