@@ -14,10 +14,10 @@ if(isExisteCliente(clientesMocks,correoUsuario)){
     const unCliente = getCliente(clientesMocks,correoUsuario)
     if(unCliente.clave===claveUsuario){
         showSuccessMessages(["Login Correcto"], true);
-        guardarEnLocalStorage("usuario",unCliente);
+        guardarEnLocalStorage(keyUsuario,unCliente);
         const ordenesCliente = ordenesMocks.filter(orden => orden.rutCliente === unCliente.rut);
         
-        guardarEnLocalStorage("ordenCompra",ordenesCliente);
+        guardarEnLocalStorage(keyOrden,ordenesCliente);
       
       
         setTimeout(function() {

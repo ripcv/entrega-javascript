@@ -4,10 +4,12 @@ simulación de una web donde se venderan productos de una Banda */
 import { recuperarEnLocalStorage} from "./funciones.js";
 
 //Variables Globales
-export const carrito = recuperarEnLocalStorage("carrito") || [];
 export const divisa = '$';
 export const IVA = 19;
-
+export const keyCarrito = "carrito";
+export const keyUsuario = "usuario";
+export const keyOrden = "ordenCompra";
+export const carrito = recuperarEnLocalStorage(keyCarrito) || [];
 //funcionalidades se encuentran en sus respectivos js
 /* 
 mainLogin.js

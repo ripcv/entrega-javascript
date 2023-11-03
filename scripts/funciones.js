@@ -1,5 +1,5 @@
 //Importamos variables
-import { divisa,IVA,carrito} from "./main.js";
+import { divisa,IVA,carrito,keyCarrito,keyUsuario,keyOrden} from "./main.js";
 
 let productosJson;
 
@@ -31,6 +31,18 @@ export function cargarMenu() {
         });
     });
   }
+
+export function mostrarLogout(){
+if (localStorage.getItem(keyUsuario)) {
+    document.getElementById("logout").style.display = "block";
+} else {
+    document.getElementById("logout").style.display = "none";
+}
+}
+
+export function logout(){
+
+}
   
 //Mostramos los productos en el HTML de la Tienda.
 export function mostrarProductos() {
@@ -120,7 +132,7 @@ export function agregarProductoAlCarro(e) {
         carrito.push(productoAComprar);
     }
 
-    guardarEnLocalStorage("carrito", carrito);
+    guardarEnLocalStorage(keyCarrito, carrito);
     actualizarIconoCarrito();
 }
 
@@ -128,12 +140,12 @@ export function actualizarCarrito(e, operacion, nuevacantidad) {
 
     if (operacion) {
         const carritoActualizado = carrito.filter(producto => parseInt(producto.id) !== parseInt(e));
-        guardarEnLocalStorage("carrito", carritoActualizado)
+        guardarEnLocalStorage(keyCarrito, carritoActualizado)
     } else {
         let productoExiste = carrito.find(producto => producto.id === e);
         if (productoExiste && siExisteStock(productoExiste.id, nuevacantidad - 1)) {
             productoExiste.cantidad = nuevacantidad
-            guardarEnLocalStorage("carrito", carrito)
+            guardarEnLocalStorage(keyCarrito, carrito)
         } else {
             showErrorMessages(["Stock maximo alcanzado del producto " + productoExiste.nombreProducto], true);
             setTimeout(function () {
@@ -156,7 +168,6 @@ export function siExisteStock(id, cantidad) {
 }
 
 export function encontrarProducto(buscarProducto) {
-    console.log(productosJson)
   return productosJson.find(producto => producto.id === parseInt(buscarProducto));
 
 }
@@ -200,8 +211,11 @@ export function recuperarEnLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key));
 }
 
-/*    */
+export function borrarLocalStorage(key){
+    localStorage.removeItem(key);
+}
 
+/*    */
 
 
 //Transformamos a Clase cuando sea necesario.
@@ -249,7 +263,7 @@ export function mostrarOrdenes() {
             cuerpoOrdenes.appendChild(unRegistro);
         }); 
     }
-    mostrarDetalle(recuperarEnLocalStorage("ordenCompra"));
+    mostrarDetalle(recuperarEnLocalStorage(keyOrden));
 }
 
 export function validarCampos(telefonoUsuario) {
