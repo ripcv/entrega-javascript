@@ -1,13 +1,48 @@
 //Importamos variables
-import { divisa,IVA,carrito} from "./main.js";
-//import { telefonoUsuario } from "./MainCarrito.js";
+import { divisa, IVA, carrito } from "./main.js";
+
+let productosJson;
+
 // Funciones
 const miLocalStorage = window.localStorage;
 
+//Cargamos el menu 
+export function cargarMenu() {
+    return new Promise((resolve, reject) => {
+        fetch('../pages/menu.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('menu').innerHTML = data;
+                resolve();
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
+//Cargamos los Datos
+function cargarProductos() {
+    return new Promise((resolve, reject) => {
+        fetch('../mocks/productos.json')
+            .then(response => response.json())
+            .then(data => {
+                productosJson = data
+                resolve();
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 //Mostramos los productos en el HTML de la Tienda.
 export function mostrarProductos() {
-    const DOMitems = document.querySelector('#productos');
-    productosMocks.forEach((producto) => {
+    cargarProductos().then(() => {
+        const DOMitems = document.querySelector('#productos');
+        console.log("estoy aqui");
+        console.log(productosJson);
+        productosJson.forEach((producto) => {
         const NODO = document.createElement('div');
         NODO.classList.add('tarjeta-producto');
 
@@ -35,10 +70,16 @@ export function mostrarProductos() {
         NODO.appendChild(nodoPrecio);
         NODO.appendChild(nodoBoton);
         DOMitems.appendChild(NODO);
-    }
 
-    )
+    })
+
+    
+    }).catch(error => {
+    console.error('Error Menu:', error);
+    });
+    
 }
+
 //Mostramos el Carrito en el HTML.
 export function mostrarCarrito() {
     if (carrito != "") {
@@ -78,10 +119,7 @@ export function agregarProductoAlCarro(e) {
     let productoExiste = carrito.find(producto => producto.id === productoAgregar.id);
 
     if (productoExiste) {
-        siExisteStock(productoExiste.id, productoExiste.cantidad) ? productoExiste.cantidad++ : showErrorMessages(["Stock maximo alcanzado del producto " + productoExiste.nombreProducto], true);
-        setTimeout(function () {
-            hideMessages();
-        }, 2000);
+        siExisteStock(productoExiste.id, productoExiste.cantidad) ? productoExiste.cantidad++ : mensaje(false, 'Stock maximo del producto alcanzado');
     } else {
         productoAgregar.cantidad = 1;
         carrito.push(productoAComprar);
@@ -113,6 +151,8 @@ export function actualizarCarrito(e, operacion, nuevacantidad) {
     actualizarTotal();
 }
 
+
+
 export function siExisteStock(id, cantidad) {
     let stockProducto = encontrarProducto(id);
     if (cantidad < stockProducto.stock) {
@@ -122,9 +162,10 @@ export function siExisteStock(id, cantidad) {
     }
 }
 
+//esta es la funcion que me da error cuando estoy en el carrito y trato de cambiar la cantidad de los productos
+//probe usando el mismo metodo que en el mostrarProductos, pero me da error igualmente.
 export function encontrarProducto(buscarProducto) {
-    return productosMocks.find(producto => producto.id === parseInt(buscarProducto));
-
+    return productosJson.find(producto => producto.id === parseInt(buscarProducto));
 }
 
 export function actualizarIconoCarrito() {
@@ -134,7 +175,7 @@ export function actualizarIconoCarrito() {
         cantidad += e.cantidad
     });
 
-    cantidad > 0 ? carritoIcon.textContent = cantidad : carritoIcon.textContent = ""
+    cantidad > 0 ? carritoIcon.textContent = cantidad : carritoIcon.textContent = ''
 }
 
 
@@ -196,7 +237,7 @@ export function toClass(nombreClase, datos) {
 // Funciones relacionadas a las Ordenes
 export function mostrarOrdenes() {
     let cuerpoOrdenes = document.getElementById("orden-procesada");
-    
+
     const mostrarDetalle = (ordenes = []) => {
         cuerpoOrdenes.innerHTML = "";
         ordenes.forEach((orden) => {
@@ -213,7 +254,7 @@ export function mostrarOrdenes() {
             `;
 
             cuerpoOrdenes.appendChild(unRegistro);
-        }); 
+        });
     }
     mostrarDetalle(recuperarEnLocalStorage("ordenCompra"));
 }
@@ -263,7 +304,28 @@ export function fechaFormateada(fecha) {
 }
 
 export function encontrarNombreProducto(idProducto) {
-    const productoEncontrado = productosMocks.find(producto => producto.id === idProducto);
+    const productoEncontrado = productosJson.find(producto => producto.id === idProducto);
     return productoEncontrado ? productoEncontrado.nombreProducto : false;
 }
 /*                */
+
+/* Mensajes Swet Alert */
+export function mensaje(type, msg) {
+    if (type) {
+        Swal.fire({
+            title: 'Operacion Exitosa!',
+            text: msg,
+            icon: 'success',
+            confirmButtonText: 'Cerrar'
+        })
+    } else {
+        Swal.fire({
+            title: 'Error!',
+            text: msg,
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
+        })
+    }
+}
+
+/*                  */

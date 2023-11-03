@@ -1,7 +1,7 @@
 /* Entrega Final JS, realizaremos una 
 simulación de una web donde se venderan productos de una Banda */
 
-import { recuperarEnLocalStorage,cargarMenu} from "./funciones.js";
+import { recuperarEnLocalStorage} from "./funciones.js";
 
 //Variables Globales
 export const carrito = recuperarEnLocalStorage("carrito") || [];
