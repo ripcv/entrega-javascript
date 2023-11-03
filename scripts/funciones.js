@@ -1,7 +1,18 @@
 //Importamos variables
-import { divisa, IVA, carrito } from "./main.js";
+import { divisa,IVA,carrito} from "./main.js";
 
 let productosJson;
+
+if (!productosJson) {
+  fetch('../mocks/productos.json')
+    .then((respuesta) => respuesta.json())
+    .then((productos) => {
+      productosJson = productos;
+    })
+    .catch(error => {
+      mensaje(false,"No se pudieron cargar los productos");
+    });
+}
 
 // Funciones
 const miLocalStorage = window.localStorage;
@@ -9,77 +20,61 @@ const miLocalStorage = window.localStorage;
 //Cargamos el menu 
 export function cargarMenu() {
     return new Promise((resolve, reject) => {
-        fetch('../pages/menu.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('menu').innerHTML = data;
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            });
+      fetch('../pages/menu.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('menu').innerHTML = data;
+          resolve();
+        })
+        .catch(error => {
+          reject(error); 
+        });
     });
-}
-
-//Cargamos los Datos
-function cargarProductos() {
-    return new Promise((resolve, reject) => {
-        fetch('../mocks/productos.json')
-            .then(response => response.json())
-            .then(data => {
-                productosJson = data
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
-}
-
+  }
+  
 //Mostramos los productos en el HTML de la Tienda.
 export function mostrarProductos() {
-    cargarProductos().then(() => {
-        const DOMitems = document.querySelector('#productos');
-        console.log("estoy aqui");
-        console.log(productosJson);
-        productosJson.forEach((producto) => {
-        const NODO = document.createElement('div');
-        NODO.classList.add('tarjeta-producto');
+    const DOMitems = document.querySelector('#productos');
+    fetch('../mocks/productos.json')
+    .then((respuesta) => respuesta.json())
+     
+    .then( (productos) => {
+            productos.forEach((producto) => {
+            const NODO = document.createElement('div');
+            NODO.classList.add('tarjeta-producto');
+    
+            const nodoImagen = document.createElement('img');
+            nodoImagen.setAttribute('src', `../assets/images/tienda/${producto.img}`)
+    
+            const nodoTitulo = document.createElement('h5');
+            nodoTitulo.textContent = producto.nombre;
+    
+            const nodoDetalle = document.createElement('p');
+            nodoDetalle.textContent = producto.descripcion;
+    
+            const nodoPrecio = document.createElement('span');
+            nodoPrecio.textContent = `${divisa}${producto.valor}`;
+    
+            const nodoBoton = document.createElement('button');
+            nodoBoton.classList.add('boton-principal');
+            nodoBoton.textContent = 'Comprar';
+            nodoBoton.setAttribute('idproducto', producto.id);
+            nodoBoton.addEventListener('click', agregarProductoAlCarro);
+    
+            NODO.appendChild(nodoImagen);
+            NODO.appendChild(nodoTitulo);
+            NODO.appendChild(nodoDetalle);
+            NODO.appendChild(nodoPrecio);
+            NODO.appendChild(nodoBoton);
+            DOMitems.appendChild(NODO);
 
-        const nodoImagen = document.createElement('img');
-        nodoImagen.setAttribute('src', `../assets/images/tienda/${producto.img}`)
-
-        const nodoTitulo = document.createElement('h5');
-        nodoTitulo.textContent = producto.nombre;
-
-        const nodoDetalle = document.createElement('p');
-        nodoDetalle.textContent = producto.descripcion;
-
-        const nodoPrecio = document.createElement('span');
-        nodoPrecio.textContent = `${divisa}${producto.valor}`;
-
-        const nodoBoton = document.createElement('button');
-        nodoBoton.classList.add('boton-principal');
-        nodoBoton.textContent = 'Comprar';
-        nodoBoton.setAttribute('idproducto', producto.id);
-        nodoBoton.addEventListener('click', agregarProductoAlCarro);
-
-        NODO.appendChild(nodoImagen);
-        NODO.appendChild(nodoTitulo);
-        NODO.appendChild(nodoDetalle);
-        NODO.appendChild(nodoPrecio);
-        NODO.appendChild(nodoBoton);
-        DOMitems.appendChild(NODO);
-
+        })       
+       
+        productosJson = productos;
     })
 
-    
-    }).catch(error => {
-    console.error('Error Menu:', error);
-    });
-    
+ 
 }
-
 //Mostramos el Carrito en el HTML.
 export function mostrarCarrito() {
     if (carrito != "") {
@@ -119,7 +114,7 @@ export function agregarProductoAlCarro(e) {
     let productoExiste = carrito.find(producto => producto.id === productoAgregar.id);
 
     if (productoExiste) {
-        siExisteStock(productoExiste.id, productoExiste.cantidad) ? productoExiste.cantidad++ : mensaje(false, 'Stock maximo del producto alcanzado');
+        siExisteStock(productoExiste.id, productoExiste.cantidad) ? productoExiste.cantidad++ : mensaje(false,'Stock maximo del producto alcanzado');
     } else {
         productoAgregar.cantidad = 1;
         carrito.push(productoAComprar);
@@ -142,7 +137,7 @@ export function actualizarCarrito(e, operacion, nuevacantidad) {
         } else {
             showErrorMessages(["Stock maximo alcanzado del producto " + productoExiste.nombreProducto], true);
             setTimeout(function () {
-                hideMessages();
+             hideMessages();
                 document.location.reload();
             }, 1000);
         }
@@ -151,10 +146,8 @@ export function actualizarCarrito(e, operacion, nuevacantidad) {
     actualizarTotal();
 }
 
-
-
 export function siExisteStock(id, cantidad) {
-    let stockProducto = encontrarProducto(id);
+    let stockProducto = encontrarProducto (id);
     if (cantidad < stockProducto.stock) {
         return true;
     } else {
@@ -162,10 +155,10 @@ export function siExisteStock(id, cantidad) {
     }
 }
 
-//esta es la funcion que me da error cuando estoy en el carrito y trato de cambiar la cantidad de los productos
-//probe usando el mismo metodo que en el mostrarProductos, pero me da error igualmente.
 export function encontrarProducto(buscarProducto) {
-    return productosJson.find(producto => producto.id === parseInt(buscarProducto));
+    console.log(productosJson)
+  return productosJson.find(producto => producto.id === parseInt(buscarProducto));
+
 }
 
 export function actualizarIconoCarrito() {
@@ -237,7 +230,7 @@ export function toClass(nombreClase, datos) {
 // Funciones relacionadas a las Ordenes
 export function mostrarOrdenes() {
     let cuerpoOrdenes = document.getElementById("orden-procesada");
-
+    
     const mostrarDetalle = (ordenes = []) => {
         cuerpoOrdenes.innerHTML = "";
         ordenes.forEach((orden) => {
@@ -254,7 +247,7 @@ export function mostrarOrdenes() {
             `;
 
             cuerpoOrdenes.appendChild(unRegistro);
-        });
+        }); 
     }
     mostrarDetalle(recuperarEnLocalStorage("ordenCompra"));
 }
@@ -310,22 +303,22 @@ export function encontrarNombreProducto(idProducto) {
 /*                */
 
 /* Mensajes Swet Alert */
-export function mensaje(type, msg) {
-    if (type) {
-        Swal.fire({
-            title: 'Operacion Exitosa!',
-            text: msg,
-            icon: 'success',
-            confirmButtonText: 'Cerrar'
-        })
-    } else {
-        Swal.fire({
-            title: 'Error!',
-            text: msg,
-            icon: 'error',
-            confirmButtonText: 'Cerrar'
-        })
+export function mensaje(type,msg){
+    if(type){
+      Swal.fire({
+        title: 'Operacion Exitosa!',
+        text: msg,
+        icon: 'success',
+        confirmButtonText: 'Cerrar'
+      })
+    }else{
+      Swal.fire({
+        title: 'Error!',
+        text: msg,
+        icon: 'error',
+        confirmButtonText: 'Cerrar'
+      })
     }
-}
+  }
 
-/*                  */
+  /*                  */
