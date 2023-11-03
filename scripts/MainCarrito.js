@@ -1,12 +1,13 @@
 //Importamos funciones y variables
-import { carrito } from "./main.js";
+import { carrito,keyCarrito, keyOrden } from "./main.js";
 import {
-    cargarMenu, mostrarCarrito, actualizarIconoCarrito, recuperarEnLocalStorage, toClass, validarCampos,
+    cargarMenu,mostrarLogout, mostrarCarrito, actualizarIconoCarrito, recuperarEnLocalStorage,borrarLocalStorage, toClass, validarCampos,
     fechaFormateada, guardarEnLocalStorage, actualizarCarrito, mensaje
 } from "./funciones.js";
 
 //cargamos el menu y si se carga correctamente, ejecutamos los procesos.
 cargarMenu().then(() => {
+    mostrarLogout()
     mostrarCarrito();
     actualizarIconoCarrito();
 
@@ -54,7 +55,7 @@ cargarMenu().then(() => {
             let fechaActual = fechaFormateada(new Date());
             let fechaEnvio = fechaFormateada(new Date(new Date().getTime() + 48 * 60 * 60 * 1000));
             const productoOrden = [];
-            const nuevaOrden = recuperarEnLocalStorage("ordenCompra") || [];
+            const nuevaOrden = recuperarEnLocalStorage(keyOrden) || [];
             //Recorremos los productos del carrito y lo agregamos a un nuevo array 
             //solo con los datos que necesitamos para la orden.
             carrito.forEach(producto => {
@@ -70,7 +71,7 @@ cargarMenu().then(() => {
             const totalCompraTexto = document.getElementById("total").innerText;
             const totalCompraNumerico = parseFloat(totalCompraTexto.replace(/[^\d.-]/g, ''));
             const orden = {
-                rutCliente: recuperarEnLocalStorage("usuario").rut,
+                rutCliente: recuperarEnLocalStorage(keyUsuario).rut,
                 idOrden: nuevaOrden.length === 0 ? (ordenesMocks[ordenesMocks.length - 1].idOrden + 1) : (nuevaOrden[nuevaOrden.length - 1].idOrden + 1),
                 productos: productoOrden,
                 fechaCompra: fechaActual,
@@ -78,8 +79,8 @@ cargarMenu().then(() => {
                 totalCompra: totalCompraNumerico
             };
             nuevaOrden.push(orden);
-            guardarEnLocalStorage("ordenCompra", nuevaOrden);
-            localStorage.removeItem("carrito");
+            guardarEnLocalStorage(keyOrden, nuevaOrden);
+            borrarLocalStorage(keyCarrito);
             showSuccessMessages([toClass("OrdenCompra", orden).ordenFinalizada()], true);
             setTimeout(function () {
                 hideMessages();
@@ -88,7 +89,7 @@ cargarMenu().then(() => {
         }
     }
 
-    const usuarioLogeado = recuperarEnLocalStorage("usuario");
+    constkeyUsuarioogeado = recuperarEnLocalStorage(keyUsuario);
     if (usuarioLogeado) {
         const usuario = toClass("Cliente", usuarioLogeado)
         nombreUsuario.value = `${usuario.toString()}`;
