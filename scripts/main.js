@@ -25,4 +25,6 @@ clave: 01234
 
 correo: raul@alvarez.cl
 clave: 12345
+
+Solo los productos se cargaron desde un json el resto se mantuvo.
  */
