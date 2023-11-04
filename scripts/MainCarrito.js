@@ -1,7 +1,7 @@
 //Importamos funciones y variables
-import { carrito,keyCarrito, keyOrden } from "./main.js";
+import { carrito,keyCarrito, keyOrden, keyUsuario } from "./main.js";
 import {
-    cargarMenu,mostrarLogout, mostrarCarrito, actualizarIconoCarrito, recuperarEnLocalStorage,borrarLocalStorage, toClass, validarCampos,
+    cargarMenu,mostrarLogout,logout, mostrarCarrito, actualizarIconoCarrito, recuperarEnLocalStorage,borrarLocalStorage, toClass, validarCampos,
     fechaFormateada, guardarEnLocalStorage, actualizarCarrito, mensaje
 } from "./funciones.js";
 
@@ -10,7 +10,7 @@ cargarMenu().then(() => {
     mostrarLogout()
     mostrarCarrito();
     actualizarIconoCarrito();
-
+    document.getElementById("logout-link").onclick = logout;
     //Capturamos procesos del Carrito
     //Eliminar Producto
     const botonesEliminar = document.querySelectorAll(".eliminarproducto");
@@ -89,14 +89,12 @@ cargarMenu().then(() => {
         }
     }
 
-    constkeyUsuarioogeado = recuperarEnLocalStorage(keyUsuario);
+    const usuarioLogeado = recuperarEnLocalStorage(keyUsuario);
     if (usuarioLogeado) {
         const usuario = toClass("Cliente", usuarioLogeado)
         nombreUsuario.value = `${usuario.toString()}`;
         correoUsuario.value = `${usuario.correo}`;
 
-    } else {
-        showErrorMessages(["Recuerde Logearse para poder finalizar la compra"], true);
     }
 }).catch(error => {
     mensaje(false,"No se Pudo mostrar el carrito");

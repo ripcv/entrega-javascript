@@ -1,4 +1,5 @@
 //Importamos la funcion necesaria para el funcionamiento de la pagina.
+import { keyUsuario,keyOrden } from './main.js';
 import { guardarEnLocalStorage } from './funciones.js';
 
 //Capturamos los datos desde el form del login.
