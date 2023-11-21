@@ -299,6 +299,13 @@ export function mostrarOrdenes() {
 }
 
 export function validarCampos(telefonoUsuario) {
+    if (!localStorage.getItem(keyUsuario)) {
+        showErrorMessages(["Debe Logearse para poder Completar el pedido"], true);
+        setTimeout(function () {
+            hideMessages();
+        }, 5000);
+        
+    } else{
     const nombreValido = /^[A-Za-záéíóúü\s]+$/i.test(nombreUsuario.value.trim());
     const direccionValida = direccionUsuario.value.trim() !== '';
     const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoUsuario.value.trim());
@@ -307,12 +314,6 @@ export function validarCampos(telefonoUsuario) {
 
     if (nombreValido && direccionValida && correoValido && telefonoValido && carrito.length) {
         return true;
-    }
-    if (!nombreValido && !direccionValida && !correoValido && !telefonoValido) {
-        showErrorMessages(["Debe Logearse para poder Completar el pedido"], true);
-        setTimeout(function () {
-            hideMessages();
-        }, 5000);
     } else {
         if (!carrito.length)
             showErrorMessages(["El Carrito esta Vacio, no se puede finalizar la compra"], true);
@@ -331,6 +332,7 @@ export function validarCampos(telefonoUsuario) {
 
         return false;
     }
+}
 }
 
 export function fechaFormateada(fecha) {
