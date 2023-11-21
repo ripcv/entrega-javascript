@@ -131,10 +131,10 @@ export function mostrarCarrito() {
         mostrarDetalle(productos);
         actualizarTotal();
     } else {
-        showErrorMessages(["No Hay Productos en el Carrito aun, visite nuesta trienda para agregar"], true);
+        showErrorMessages(["No Hay Productos en el Carrito aun, visite nuesta tienda para agregar"], true);
         setTimeout(function () {
             hideMessages();
-        }, 3000);
+        }, 5000);
     }
 }
 
