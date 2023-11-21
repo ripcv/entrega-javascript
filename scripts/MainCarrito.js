@@ -85,7 +85,7 @@ cargarMenu().then(() => {
             setTimeout(function () {
                 hideMessages();
                 window.location.href = "./ordenes.html";
-            }, 3000);
+            }, 5000);
         }
     }
 

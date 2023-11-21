@@ -314,9 +314,9 @@ export function validarCampos(telefonoUsuario) {
 
     if (nombreValido && direccionValida && correoValido && telefonoValido && carrito.length) {
         return true;
-    } else {
-        if (!carrito.length)
-            showErrorMessages(["El Carrito esta Vacio, no se puede finalizar la compra"], true);
+    } else if (!carrito.length){
+        showErrorMessages(["No tiene productos agregados, no se puede finalizar la compra"], true);
+        }else{
         if (!nombreValido)
             showErrorMessages(["No se ha ingresado el Nombre."], true);
         if (!direccionValida)
@@ -381,7 +381,7 @@ export function mensaje(type, msg) {
                 toast: true,
                 position: "top-end",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                   toast.onmouseenter = Swal.stopTimer;
