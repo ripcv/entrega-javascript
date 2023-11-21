@@ -27,7 +27,7 @@ cargarMenu().then(() => {
             const cantidad = parseInt(event.target.value);
             const productoId = parseInt(event.target.getAttribute('data-productid'));
             if (cantidad == 0) {
-                actualizarCarrito(productoId, true, cantidad);
+               actualizarCarrito(productoId, true, cantidad);
                 document.location.reload();
             } else {
                 actualizarCarrito(productoId, false, cantidad)
@@ -96,8 +96,10 @@ cargarMenu().then(() => {
         correoUsuario.value = `${usuario.correo}`;
 
     }
+
+    
 }).catch(error => {
-    mensaje(false,"No se Pudo mostrar el carrito");
+    mensaje("warning","No se Pudo mostrar el carrito");
 });
 
 

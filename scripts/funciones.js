@@ -10,7 +10,7 @@ if (!productosJson) {
             productosJson = productos;
         })
         .catch(error => {
-            mensaje(false, "No se pudieron cargar los productos");
+            mensaje("warning", "No se pudieron cargar los productos");
         });
 }
 
@@ -120,7 +120,7 @@ export function mostrarCarrito() {
             <td scope="col">${productos.nombreProducto} </td>
             <td scope="col"><input class="cantidad-input" name="cantidad" type="number" value="${productos.cantidad}" data-productid="${productos.id}" /></td>
             <td scope="col">${divisa}${productos.valor} </td>
-            <td scope="col">${divisa}${productos.total()} </td>
+            <td scope="col" id="${productos.id}">${divisa}${productos.total()} </td>
             <td scope="col"><button class="eliminarproducto" data-productoid="${productos.id}"> X </button> </td>
             `;
 
@@ -148,12 +148,17 @@ export function agregarProductoAlCarro(e) {
     let productoExiste = carrito.find(producto => producto.id === productoAgregar.id);
 
     if (productoExiste) {
-        siExisteStock(productoExiste.id, productoExiste.cantidad) ? productoExiste.cantidad++ : mensaje(false, 'Stock maximo del producto alcanzado');
+        if (siExisteStock(productoExiste.id, productoExiste.cantidad)) {
+            productoExiste.cantidad++;
+            mensaje("agregado");
+        } else {
+            mensaje("warning", 'Stock máximo del producto alcanzado');
+        }
     } else {
         productoAgregar.cantidad = 1;
         carrito.push(productoAComprar);
+        mensaje("agregado");
     }
-
     guardarEnLocalStorage(keyCarrito, carrito);
     actualizarIconoCarrito();
 }
@@ -168,6 +173,11 @@ export function actualizarCarrito(e, operacion, nuevacantidad) {
         if (productoExiste && siExisteStock(productoExiste.id, nuevacantidad - 1)) {
             productoExiste.cantidad = nuevacantidad
             guardarEnLocalStorage(keyCarrito, carrito)
+
+            const producto = toClass("Producto", productoExiste);
+            const precioActualizado = document.getElementById(producto.id)
+
+            precioActualizado && (precioActualizado.textContent = `${divisa}${producto.total()}`);
         } else {
             showErrorMessages(["Stock maximo alcanzado del producto " + productoExiste.nombreProducto], true);
             setTimeout(function () {
@@ -346,21 +356,46 @@ export function encontrarNombreProducto(idProducto) {
 
 /* Mensajes Swet Alert */
 export function mensaje(type, msg) {
-    if (type) {
-        Swal.fire({
-            title: 'Operacion Exitosa!',
-            text: msg,
-            icon: 'success',
-            confirmButtonText: 'Cerrar'
-        })
-    } else {
-        Swal.fire({
-            title: 'Error!',
-            text: msg,
-            icon: 'error',
-            confirmButtonText: 'Cerrar'
-        })
+  
+    switch (type) {
+        case "success":
+            Swal.fire({
+                title: 'Operacion Exitosa!',
+                text: msg,
+                icon: 'success',
+                confirmButtonText: 'Cerrar'
+            })
+            break;
+        case "warning":
+            Swal.fire({
+                title: 'Error!',
+                text: msg,
+                icon: 'error',
+                confirmButtonText: 'Cerrar'
+            })
+        break;
+        case "agregado":
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Producto Agregado Correctamente"
+              });
+        break;   
+        default:
+            break;
     }
 }
+
+
 
 /*                  */
