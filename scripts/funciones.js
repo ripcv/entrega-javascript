@@ -312,7 +312,7 @@ export function validarCampos(telefonoUsuario) {
         showErrorMessages(["Debe Logearse para poder Completar el pedido"], true);
         setTimeout(function () {
             hideMessages();
-        }, 2000);
+        }, 5000);
     } else {
         if (!carrito.length)
             showErrorMessages(["El Carrito esta Vacio, no se puede finalizar la compra"], true);
@@ -327,7 +327,7 @@ export function validarCampos(telefonoUsuario) {
 
         setTimeout(function () {
             hideMessages();
-        }, 3000);
+        }, 5000);
 
         return false;
     }
